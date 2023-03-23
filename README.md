@@ -33,7 +33,7 @@ A: Die fertigen Dateien landen im Hauptordner, dort wo auch das Skript liegt.
 
 A: Um Inhalte von Content-Select herunterzuladen, muss sich der Client dort authentifizieren können. Dazu braucht er ein Cookie. Anhand der IP-Adresse aus einem berechtigten Bereich (z. B. aus der Uni) prüft der Server die Erlaubnis zum **Erhalt des Cookies**. Bei der ersten Verbindung dauert das eine Weile. Vermutlich hat der Anbieter diese Verzögerung als Spam-Schutz implementiert.
 
-Sobald das Cookie allerdings zugeteilt wurde, kann es mehrfach benutzt werden. **Falls mehr du mehr als ein Buch herunterladen möchtest, starte daher nicht** **jedes Mal das Skript neu.** Drücke nach erfolgtem Download eine beliebige Taste, um das Cookie weiter zu verwenden und die Wartezeit ab dem zweiten Download zu verkürzen.
+Sobald das Cookie allerdings zugeteilt wurde, kann es mehrfach benutzt werden. **Falls mehr du mehr als ein Buch herunterladen möchtest, starte daher nicht jedes Mal das Skript neu.** Drücke nach erfolgtem Download eine beliebige Taste, um das Cookie weiter zu verwenden und die Wartezeit ab dem zweiten Download zu verkürzen.
 
 ## F: Ist das überhaupt erlaubt?
 
@@ -41,11 +41,13 @@ A: Vermutlich schon. Der Download ist nur Personen möglich, die sowieso dafür 
 
 ## F: Warum ein Skript für Windows?
 
-A: Viele Unis finden proprietäre Windows-Software ganz toll und bürden ihren Studierenden gerne ein ganzes Konglomerat davon auf. Wenn ich mir für diese Schweinereien sowieso eine virtuelle Maschine aufsetzen muss, dann darf das Skript gerne auch direkt mit dort drin ausgeführt werden. 
+A: Viele Unis finden proprietäre Windows-Software ganz toll und bürden ihren Studierenden gerne ein ganzes Konglomerat davon auf. Wenn ich mir für diese Schweinereien eh eine virtuelle Maschine aufsetzen muss, darf das Skript gerne auch direkt mit dort drin ausgeführt werden. 
 
-Allerdings sollte eine Portierung nach Linux ziemlich einfach sein, da das Skript ansonsten nur auf freie Standardsoftware zurückgreift, die sich dort schnell und einfach als Paket installieren lässt (curl, grep, sed, und so weiter).
+Allerdings sollte eine Portierung nach Linux ziemlich einfach sein, da das Skript ansonsten nur auf freie Standardsoftware zurückgreift, die sich dort schnell und einfach als Paket installieren lässt (curl, grep, sed, ...).
 
 ## F: Warum funktioniert es nicht?
 
-A: Schwer zu sagen. Vielleicht hast du etwas falsch gemacht? Es kann aber auch sein, dass Content-Select eine Änderung an der Plattform vorgenommen hat, mit der das Skript noch nicht umgehen kann. Warte in diesem Fall auf ein Update.
+A: Schwer zu sagen. Vielleicht hast du etwas falsch gemacht oder Skript beinhaltet einen Fehler?
+
+Es kann aber auch sein, dass Content-Select eine Änderung an der Plattform vorgenommen hat, mit der das Skript noch nicht umgehen kann. Warte in diesem Fall auf ein Update.
 

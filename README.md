@@ -31,7 +31,8 @@ A: Die fertigen Dateien landen im Hauptordner, dort wo auch das Skript liegt.
 
 ## F: Warum dauert das so lange?
 
-A: Um Inhalte von Content-Select herunterzuladen, muss sich der Client dort authentifizieren können. Dazu braucht er ein Cookie. Anhand der IP-Adresse aus einem berechtigten Bereich (z. B. aus der Uni) prüft der Server die Erlaubnis zum **Erhalt des Cookies**. Bei der ersten Verbindung dauert das eine Weile. Vermutlich hat der Anbieter diese Verzögerung als Spam-Schutz implementiert. 
+A: Um Inhalte von Content-Select herunterzuladen, muss sich der Client dort authentifizieren können. Dazu braucht er ein Cookie. Anhand der IP-Adresse aus einem berechtigten Bereich (z. B. aus der Uni) prüft der Server die Erlaubnis zum **Erhalt des Cookies**. Bei der ersten Verbindung dauert das eine Weile. Vermutlich hat der Anbieter diese Verzögerung als Spam-Schutz implementiert.
+
 Sobald das Cookie allerdings zugeteilt wurde, kann es mehrfach benutzt werden. **Falls mehr du mehr als ein Buch herunterladen möchtest, starte daher nicht** **jedes Mal das Skript neu.** Drücke nach erfolgtem Download eine beliebige Taste, um das Cookie weiter zu verwenden und die Wartezeit ab dem zweiten Download zu verkürzen.
 
 ## F: Ist das überhaupt erlaubt?
@@ -41,6 +42,7 @@ A: Vermutlich schon. Der Download ist nur Personen möglich, die sowieso dafür 
 ## F: Warum ein Skript für Windows?
 
 A: Viele Unis finden proprietäre Windows-Software ganz toll und bürden ihren Studierenden gerne ein ganzes Konglomerat davon auf. Wenn ich mir für diese Schweinereien sowieso eine virtuelle Maschine aufsetzen muss, dann darf das Skript gerne auch direkt mit dort drin ausgeführt werden. 
+
 Allerdings sollte eine Portierung nach Linux ziemlich einfach sein, da das Skript ansonsten nur auf freie Standardsoftware zurückgreift, die sich dort schnell und einfach als Paket installieren lässt (curl, grep, sed, und so weiter).
 
 ## F: Warum funktioniert es nicht?

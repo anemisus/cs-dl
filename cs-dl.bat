@@ -26,29 +26,22 @@
 :     2023/02/26 : Anemisus : Problem bei Authentifizierung behoben.
 :     2023/03/18 : Anemisus : Cookie-Recycling hinzugefügt.
 :     2023/03/18 : Anemisus : Umgang mit nicht-ASCII-Zeichen verbessert.
+:     2023/03/23 : Anemisus : Fehlerbehandlung hinzugefügt. Code bereinigt.
 :
 : ------------------------------------------------------------------------------
 : END_OF_HEADER
 : ------------------------------------------------------------------------------
 
-SET version=23w11d
+:RESTART
+SET version=23w12a
 RMDIR /S /Q temp
 
 :NEXT
 @ECHO OFF
 CLS
 
-ECHO.
-ECHO -------------------------------------------------------------------------------
-ECHO                               _  _
-ECHO          ___  ___          __^| ^|^| ^|     Der Content-Select-Downloader:
-ECHO         / __^|/ __^| _____  / _` ^|^| ^|     komplette Werke statt nur Kapitel
-ECHO        ^| (__ \__ \^|_____^|^| (_^| ^|^| ^|
-ECHO         \___^|^|___/        \__,_^|^|_^|     Version %version%
-ECHO.
-ECHO -------------------------------------------------------------------------------
-ECHO.
-ECHO     Bitte gib eine Content Select URL in einem der folgenden Formate an:
+CALL:HEADER
+ECHO     Bitte gib eine Content-Select URL in einem der folgenden Formate an:
 ECHO     (ohne Leerzeichen oder neue Zeilen, nur aus der URL-Zeile kopieren)
 ECHO.
 ECHO     --^> https://content-select.com/de/portal/media/view/
@@ -63,70 +56,51 @@ ECHO.
 SET /P csl="--> "
 CLS
 
-ECHO.
-ECHO -------------------------------------------------------------------------------
-ECHO                               _  _
-ECHO          ___  ___          __^| ^|^| ^|     Der Content-Select-Downloader:
-ECHO         / __^|/ __^| _____  / _` ^|^| ^|     komplette Werke statt nur Kapitel
-ECHO        ^| (__ \__ \^|_____^|^| (_^| ^|^| ^|
-ECHO         \___^|^|___/        \__,_^|^|_^|     Version %version%
-ECHO.
-ECHO -------------------------------------------------------------------------------
-ECHO.
-IF EXIST .\temp\cookie.txt GOTO SKIP1
-ECHO Bereite Arbeitsverzeichnis vor ...
-MKDIR temp
-:SKIP1
+CALL:HEADER
+IF NOT EXIST .\temp\ (
+    ECHO Bereite Arbeitsverzeichnis vor ...
+    MKDIR temp
+)
 CD temp
 ECHO Extrahiere Buch-UUID ...
 ECHO %csl% | ..\lib\grep -Po "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}" > uuid.txt
 SET /P uuid=<uuid.txt
-IF EXIST .\cookie.txt GOTO REUSE
-ECHO Auf Content Select Server wird gewartet ...
-ECHO.
-..\lib\curl --silent --location --compressed https://content-select.com/media/moz_viewer/%uuid% ^
---cookie-jar cookie.txt ^
--o website.html ^
--H "User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0" ^
--H "Accept: */*" -H "Accept-Language: de,en-US;q=0.7,en;q=0.3" ^
--H "Accept-Encoding: gzip, deflate, br" ^
--H "Connection: keep-alive" ^
--H "Sec-Fetch-Dest: document" ^
--H "Sec-Fetch-Mode: navigate" ^
--H "Sec-Fetch-Site: none" ^
--H "Sec-Fetch-User: ?1"
-GOTO SKIP2
-:REUSE
-ECHO Cookie wird wiederverwendet ...
-ECHO.
-..\lib\curl --silent --location --compressed https://content-select.com/media/moz_viewer/%uuid% ^
---cookie cookie.txt ^
--o website.html ^
--H "User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0" ^
--H "Accept: */*" -H "Accept-Language: de,en-US;q=0.7,en;q=0.3" ^
--H "Accept-Encoding: gzip, deflate, br" ^
--H "Connection: keep-alive" ^
--H "Sec-Fetch-Dest: document" ^
--H "Sec-Fetch-Mode: navigate" ^
--H "Sec-Fetch-Site: none" ^
--H "Sec-Fetch-User: ?1"
-:SKIP2
+IF "%uuid%" == "" (
+    ECHO.
+    ECHO Keine UUID gefunden, URL scheint falsch zu sein.
+    ECHO.
+    ECHO Beliebige Taste, um von vorne zu beginnen.
+    ECHO.
+    PAUSE > NUL
+    CD ..
+    GOTO NEXT
+)
+IF EXIST .\cookie.txt (
+    ECHO Cookie wird wiederverwendet ...
+    ECHO.
+    CALL:AUTH --cookie cookie.txt
+) ELSE (
+    ECHO Auf Content-Select Server wird gewartet ...
+    ECHO.
+    CALL:AUTH --cookie-jar cookie.txt
+)
 CLS
 
-ECHO.
-ECHO -------------------------------------------------------------------------------
-ECHO                               _  _
-ECHO          ___  ___          __^| ^|^| ^|     Der Content-Select-Downloader:
-ECHO         / __^|/ __^| _____  / _` ^|^| ^|     komplette Werke statt nur Kapitel
-ECHO        ^| (__ \__ \^|_____^|^| (_^| ^|^| ^|
-ECHO         \___^|^|___/        \__,_^|^|_^|     Version %version%
-ECHO.
-ECHO -------------------------------------------------------------------------------
-ECHO.
-ECHO Folgendes Buch wurde gefunden:
-ECHO.
+CALL:HEADER
 ..\lib\grep -m 1 -e "data-title=" website.html | ..\lib\sed "s/^\s*//g" | ..\lib\sed "s/data-title=""//g" | ..\lib\sed "s/""$//g" | ..\lib\sed "s/[^\x00-\x7F\]//g" | ..\lib\recode -qf html | ..\lib\sed "s/[^\x00-\x7F\]//g" | ..\lib\sed "s/ \+/ /g" > title.txt
 SET /P title=<title.txt
+IF "%title%" == "" (
+    ECHO Kein Buch-Informationen zur UUID gefunden.
+    ECHO Wahrscheinlich ist die Authentifizierung fehlgeschlagen.
+    ECHO.
+    ECHO Beliebige Taste, um von vorne zu beginnen.
+    ECHO.
+    PAUSE > NUL
+    CD ..
+    GOTO RESTART
+)
+ECHO Folgendes Buch wurde gefunden:
+ECHO.
 ECHO|SET /P="--> %title%"
 ECHO.
 ECHO.
@@ -138,16 +112,7 @@ ECHO.
 PAUSE > NUL
 CLS
 
-ECHO.
-ECHO -------------------------------------------------------------------------------
-ECHO                               _  _
-ECHO          ___  ___          __^| ^|^| ^|     Der Content-Select-Downloader:
-ECHO         / __^|/ __^| _____  / _` ^|^| ^|     komplette Werke statt nur Kapitel
-ECHO        ^| (__ \__ \^|_____^|^| (_^| ^|^| ^|
-ECHO         \___^|^|___/        \__,_^|^|_^|     Version %version%
-ECHO.
-ECHO -------------------------------------------------------------------------------
-ECHO.
+CALL:HEADER
 ..\lib\grep -Po "[0-9a-f-]{16,}/[0-9]*" website.html > chapters.txt
 FIND /V /C "" chapters.txt | ..\lib\grep -Po "\d{1,}" > chapcnt.txt
 SET /P chapcnt=<chapcnt.txt
@@ -179,3 +144,30 @@ ECHO Beliebige Taste, um ein weiteres Buch herunterzuladen.
 ECHO.
 PAUSE > NUL
 GOTO NEXT
+
+:HEADER
+    ECHO.
+    ECHO -------------------------------------------------------------------------------
+    ECHO                               _  _
+    ECHO          ___  ___          __^| ^|^| ^|     Der Content-Select-Downloader:
+    ECHO         / __^|/ __^| _____  / _` ^|^| ^|     komplette Werke statt nur Kapitel
+    ECHO        ^| (__ \__ \^|_____^|^| (_^| ^|^| ^|
+    ECHO         \___^|^|___/        \__,_^|^|_^|     Version %version%
+    ECHO.
+    ECHO -------------------------------------------------------------------------------
+    ECHO.
+EXIT /B 0
+
+:AUTH
+    ..\lib\curl --silent --location --compressed https://content-select.com/media/moz_viewer/%uuid% ^
+    %* ^
+    -o website.html ^
+    -H "User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0" ^
+    -H "Accept: */*" -H "Accept-Language: de,en-US;q=0.7,en;q=0.3" ^
+    -H "Accept-Encoding: gzip, deflate, br" ^
+    -H "Connection: keep-alive" ^
+    -H "Sec-Fetch-Dest: document" ^
+    -H "Sec-Fetch-Mode: navigate" ^
+    -H "Sec-Fetch-Site: none" ^
+    -H "Sec-Fetch-User: ?1"
+EXIT /B 0

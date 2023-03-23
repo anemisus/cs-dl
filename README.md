@@ -6,7 +6,7 @@
 
 1. Klicke auf den Button `<> Code ▾` und im Pop-Up unten auf [`Download ZIP`](https://github.com/anemisus/cs-dl/archive/refs/heads/main.zip).
 2. Entpacke die heruntergeladene ZIP-Datei auf deinem Rechner.
-3. Navigiere in den Ordner `cs-dl`.
+3. Navigiere in den Ordner `cs-dl-main`.
 4. Führe das Skript `cs-dl.bat` aus.
 5. Folge den Anweisungen auf dem Bildschirm.
 

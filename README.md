@@ -33,11 +33,17 @@ A: Die fertigen Dateien landen im Hauptordner, dort wo auch das Skript liegt.
 
 A: Um Inhalte von Content-Select herunterzuladen, muss sich der Client dort authentifizieren können. Dazu braucht er ein Cookie. Anhand der IP-Adresse aus einem berechtigten Bereich (z. B. aus der Uni) prüft der Server die Erlaubnis zum **Erhalt des Cookies**. Bei der ersten Verbindung dauert das eine Weile. Vermutlich hat der Anbieter diese Verzögerung als Spam-Schutz implementiert.
 
-Sobald das Cookie allerdings zugeteilt wurde, kann es mehrfach benutzt werden. **Falls mehr du mehr als ein Buch herunterladen möchtest, starte daher nicht jedes Mal das Skript neu.** Drücke nach erfolgtem Download eine beliebige Taste, um das Cookie weiter zu verwenden und die Wartezeit ab dem zweiten Download zu verkürzen.
+Sobald das Cookie allerdings zugeteilt wurde, kann es mehrfach benutzt werden.
+
+**Falls mehr du mehr als ein Buch herunterladen möchtest, starte daher nicht jedes Mal das Skript neu.** Drücke nach erfolgtem Download eine beliebige Taste, um das Cookie weiter zu verwenden und die Wartezeit ab dem zweiten Download zu verkürzen.
 
 ## F: Ist das überhaupt erlaubt?
 
-A: Vermutlich schon. Der Download ist nur Personen möglich, die sowieso dafür berechtigt sind. **Das Skript nutzt keine Sicherheitslücken aus.** Es simuliert nur einen Browser, der die einzelnen Kapitel nacheinander abruft. Am Ende werden die Inhalte dann lokal zu einem kompletten Werk zusammengefügt.
+A: Vermutlich schon. Der Download ist nur Personen möglich, die sowieso dafür berechtigt sind.
+
+**Das Skript nutzt keine Sicherheitslücken aus.**
+
+Es simuliert nur einen Browser, der die einzelnen Kapitel nacheinander abruft. Am Ende werden die Inhalte dann lokal zu einem kompletten Werk zusammengefügt.
 
 ## F: Warum ein Skript für Windows?
 

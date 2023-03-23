@@ -12,13 +12,13 @@
 
 # FAQ
 
-## F: Wofür soll das gut sein?
+## F: Was ist das Problem mit Content-Select?
 
-A: Normalerweise erlaubt Content-Select nur den Download einzelner Kapitel aus eBooks. Die so über einen Browser heruntergeladenen Dateien haben außerdem ein sichtbares hässliches Wasserzeichen.
+A: Normalerweise erlaubt Content-Select nur den Download einzelner Kapitel aus eBooks. Die so über einen Browser heruntergeladenen Dateien enthalten außerdem ein sichtbares Wasserzeichen auf jeder einzelnen Seite.
 
 Aus dieser **Design-Entscheidung** ergeben sich **folgende Nachteile**:
 
-- Bücher sind nicht mehr komplett digital durchsuchbar (`STRG + F`).
+- Die Bücher sind nicht mehr komplett digital durchsuchbar (`STRG + F`).
 - Durch die vielen Dateien geht schnell die Übersicht verloren.
 - Das Wasserzeichen ist optisch störend wie Fettflecken oder Eselsohren.
 - Es ist hart nervig, 20 Kapitel einzeln ziehen zu müssen.
@@ -27,7 +27,7 @@ Hey Content-Select? Wie wäre es, wenn ihr einfach aufhört, uns damit auf den S
 
 ## F: Wo finde ich mein Buch?
 
-A: Die fertigen Dateien landen im Hauptordner, dort wo auch das Skript liegt.
+A: Die fertigen Dateien landen im Hauptordner, wo auch das Skript liegt.
 
 ## F: Warum dauert das so lange?
 
@@ -41,19 +41,25 @@ Falls mehr du mehr als ein Buch herunterladen möchtest, starte daher nicht jede
 
 A: Vermutlich schon. Der Download ist nur Personen möglich, die grundsätzlich dazu berechtigt sind.
 
-✅ **Das Skript nutzt keine Sicherheitslücken aus.**
+🧸 **Das Skript nutzt keine Sicherheitslücken aus.**
 
 Es simuliert lediglich einen Browser, der die einzelnen Kapitel nacheinander abruft. Am Ende werden die Inhalte dann lokal zu einem kompletten Werk zusammengefügt.
 
 ## F: Warum ein Skript für Windows?
 
-A: Viele Unis finden proprietäre Windows-Software ganz toll und bürden ihren Studierenden gerne ein ganzes Konglomerat davon auf. Wenn ich mir für diese Schweinereien eh eine virtuelle Maschine aufsetzen muss, darf das Skript gerne auch direkt mit dort drin ausgeführt werden. 
+A: Viele Unis finden proprietäre Windows-Software toll und bürden ihren Studierenden gerne ein ganzes Konglomerat davon auf. Wenn ich mir für diese Schweinereien eh eine virtuelle Maschine aufsetzen muss, darf das Skript ruhig direkt mit da drin ausgeführt werden. 
 
-Allerdings sollte eine Portierung nach Linux ziemlich einfach sein, da das Skript ansonsten nur auf freie Standardsoftware zurückgreift, die sich dort schnell und einfach als Paket installieren lässt (curl, grep, sed, ...).
+Allerdings sollte eine Portierung nach Linux ziemlich einfach sein, weil das Skript ansonsten nur auf freie Standardsoftware zurückgreift, die sich schnell und einfach als Paket installieren lässt (curl, grep, sed, ...).
 
 ## F: Warum funktioniert es nicht?
 
 A: Schwer zu sagen. Vielleicht hast du etwas falsch gemacht oder Skript beinhaltet einen Fehler?
 
 Es kann aber auch sein, dass Content-Select eine Änderung an der Plattform vorgenommen hat, mit der das Skript noch nicht umgehen kann. Warte in diesem Fall auf ein Update.
+
+## F: Fingerprint des Signaturschlüssels?
+
+A: Er lautet `804ABD4A66A66E5242131FAB14AAF2972A56D0F8`.
+
+Du kannst den Schlüssel z. B. auf [keys.openpgp.org](https://keys.openpgp.org/) suchen und herunterladen.
 

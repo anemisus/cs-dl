@@ -1,4 +1,4 @@
-[![cs-dl Logo](https://raw.githubusercontent.com/anemisus/cs-dl/main/logo.svg)](#readme)
+[![cs-dl Logo](https://raw.githubusercontent.com/anemisus/cs-dl/main/media/logo.svg)](#readme)
 
 **cs-dl ist ein Skript für Windows**, mit dem sich eBooks von der Plattform [Content-Select](https://content-select.com/) in vollem Umfang und ohne hässliche Wasserzeichen herunterladen lassen.
 
@@ -9,6 +9,8 @@
 3. Navigiere in den Ordner `cs-dl-main`.
 4. Führe das Skript `cs-dl.bat` aus.
 5. Folge den Anweisungen auf dem Bildschirm.
+
+![cs-dl Vorschau](https://raw.githubusercontent.com/anemisus/cs-dl/main/media/vorschau.gif)
 
 # FAQ
 
@@ -47,7 +49,7 @@ Es simuliert lediglich einen Browser, der die einzelnen Kapitel nacheinander abr
 
 ## F: Warum ein Skript für Windows?
 
-A: Viele Unis finden proprietäre Windows-Software toll und bürden ihren Studierenden gerne ein ganzes Konglomerat davon auf. Wenn ich mir für diese Schweinereien eh eine virtuelle Maschine aufsetzen muss, darf das Skript ruhig direkt mit da drin ausgeführt werden. 
+A: Viele Unis finden proprietäre Windows-Software toll und bürden ihren Studierenden gerne ein ganzes Konglomerat davon auf. Wenn ich mir für diese Schweinereien eh eine virtuelle Maschine aufsetzen muss, darf das Skript ruhig direkt mit da drin ausgeführt werden.
 
 Allerdings sollte eine Portierung nach Linux ziemlich einfach sein, weil das Skript ansonsten nur auf freie Standardsoftware zurückgreift, die sich schnell und einfach als Paket installieren lässt (curl, grep, sed, ...).
 
@@ -62,4 +64,3 @@ Es kann aber auch sein, dass Content-Select eine Änderung an der Plattform vorg
 A: Er lautet `804ABD4A66A66E5242131FAB14AAF2972A56D0F8`.
 
 Du kannst den Schlüssel z. B. auf [keys.openpgp.org](https://keys.openpgp.org/) suchen und herunterladen.
-

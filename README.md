@@ -1,3 +1,6 @@
+Readme zu cs-dl
+===============
+
 [![cs-dl Logo](https://raw.githubusercontent.com/anemisus/cs-dl/main/media/logo.svg)](#readme)
 
 **cs-dl ist ein Skript für Windows**, mit dem sich eBooks von der Plattform [Content-Select](https://content-select.com/) in vollem Umfang und ohne hässliche Wasserzeichen herunterladen lassen.
@@ -51,7 +54,7 @@ Es simuliert lediglich einen Browser, der die einzelnen Kapitel nacheinander abr
 
 A: Viele Unis finden proprietäre Windows-Software toll und bürden ihren Studierenden gerne ein ganzes Konglomerat davon auf. Wenn ich mir für diese Schweinereien eh eine virtuelle Maschine aufsetzen muss, darf das Skript ruhig direkt mit da drin ausgeführt werden.
 
-Allerdings sollte eine Portierung nach Linux ziemlich einfach sein, weil das Skript ansonsten nur auf freie Standardsoftware zurückgreift, die sich schnell und einfach als Paket installieren lässt (curl, grep, sed, ...).
+Allerdings sollte eine Portierung nach Linux ziemlich einfach sein, weil das Skript ansonsten nur auf freie Standardsoftware zurückgreift, die sich schnell und einfach als Paket installieren lässt.
 
 ## F: Warum funktioniert es nicht?
 
@@ -64,3 +67,15 @@ Es kann aber auch sein, dass Content-Select eine Änderung an der Plattform vorg
 A: Er lautet `804ABD4A66A66E5242131FAB14AAF2972A56D0F8`.
 
 Du kannst den Schlüssel z. B. auf [keys.openpgp.org](https://keys.openpgp.org/) suchen und herunterladen.
+
+# Lizenzen und Quellen
+
+Alle Bestandteile dieser Software wurden unter freien Lizenzen veröffentlicht. Dafür bedanke ich mich bei den Autor_innen und verlinke hier die Details und Quellen:
+
+Software | Version | Lizenz                                                                 | Quellen
+-------- | ------- | ---------------------------------------------------------------------- | ------------------------------------
+curl     | 8.0.1   | [MIT-Lizenz (modifiziert)](https://curl.se/docs/copyright.html)        | https://github.com/curl/curl-for-win
+grep     | 2.5.4   | [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)              | https://sourceforge.net/projects/gnuwin32/files/grep/2.5.4/
+pdftk    | 2.02    | [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)              | https://www.pdflabs.com/tools/pdftk-server/
+recode   | 3.6     | [GNU GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) | https://sourceforge.net/projects/unxutils/files/unxutils/current/
+sed      | 4.2.1   | [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)              | https://sourceforge.net/projects/gnuwin32/files/sed/4.2.1/

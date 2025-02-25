@@ -3,14 +3,14 @@ Readme zu cs-dl
 
 [![cs-dl Logo](https://raw.githubusercontent.com/anemisus/cs-dl/main/media/logo.svg)](#readme)
 
-**cs-dl ist ein Skript für Windows**, mit dem sich eBooks von der Plattform [Content-Select](https://content-select.com/) in vollem Umfang und ohne hässliche Wasserzeichen herunterladen lassen.
+**cs-dl ist ein Skript für Windows und Linux**, mit dem sich eBooks von der Plattform [Content-Select](https://content-select.com/) in vollem Umfang und ohne hässliche Wasserzeichen herunterladen lassen.
 
 # Installation und Nutzung
 
 1. Klicke auf den Button `<> Code ▾` und im Pop-Up unten auf [`Download ZIP`](https://github.com/anemisus/cs-dl/archive/refs/heads/main.zip).
 2. Entpacke die heruntergeladene ZIP-Datei auf deinem Rechner.
 3. Navigiere in den Ordner `cs-dl-main`.
-4. Führe das Skript `cs-dl.bat` aus.
+4. Führe das Skript `cs-dl.bat` (Windows) oder `cs-dl.sh` (Linux) aus.
 5. Folge den Anweisungen auf dem Bildschirm.
 
 ![cs-dl Vorschau](https://raw.githubusercontent.com/anemisus/cs-dl/main/media/vorschau.gif)
@@ -49,12 +49,6 @@ A: Vermutlich schon. Der Download ist nur Personen möglich, die grundsätzlich 
 🧸 **Das Skript nutzt keine Sicherheitslücken aus.**
 
 Es simuliert lediglich einen Browser, der die einzelnen Kapitel nacheinander abruft. Am Ende werden die Inhalte dann lokal zu einem kompletten Werk zusammengefügt.
-
-## F: Warum ein Skript für Windows?
-
-A: Viele Unis finden proprietäre Windows-Software toll und bürden ihren Studierenden gerne ein ganzes Konglomerat davon auf. Wenn ich mir für diese Schweinereien eh eine virtuelle Maschine aufsetzen muss, darf das Skript ruhig direkt mit da drin ausgeführt werden.
-
-Allerdings sollte eine Portierung nach Linux ziemlich einfach sein, weil das Skript ansonsten nur auf freie Standardsoftware zurückgreift, die sich schnell und einfach als Paket installieren lässt.
 
 ## F: Warum funktioniert es nicht?
 

@@ -4,7 +4,7 @@
 :
 : cs-dl.bat
 :
-: Copyright 2023 Anemisus
+: Copyright 2026 Anemisus
 :
 : This program is free software: you can redistribute it and/or modify
 : it under the terms of the GNU General Public License as published by
@@ -27,13 +27,14 @@
 :     2023/03/18 : Anemisus : Cookie-Recycling hinzugefügt.
 :     2023/03/18 : Anemisus : Umgang mit nicht-ASCII-Zeichen verbessert.
 :     2023/03/23 : Anemisus : Fehlerbehandlung hinzugefügt. Code bereinigt.
+:     2026/11/10 : Anemisus : Problem bei Authentifizierung behoben.
 :
 : ------------------------------------------------------------------------------
 : END_OF_HEADER
 : ------------------------------------------------------------------------------
 
 :RESTART
-SET version=23w12a
+SET version=26w46b
 RMDIR /S /Q temp
 
 :NEXT
@@ -75,14 +76,13 @@ IF "%uuid%" == "" (
     CD ..
     GOTO NEXT
 )
-IF EXIST .\cookie.txt (
-    ECHO Cookie wird wiederverwendet ...
+IF EXIST .\cookies.txt (
+    ECHO Vorhandene Cookies werden wiederverwendet ...
     ECHO.
-    CALL:AUTH --cookie cookie.txt
+    CALL:GETMVPAGE
 ) ELSE (
-    ECHO Auf Content-Select Server wird gewartet ...
-    ECHO.
-    CALL:AUTH --cookie-jar cookie.txt
+    ECHO Hole neue Cookies zur Authentifizierung ...
+    CALL:AUTH
 )
 CLS
 
@@ -118,16 +118,8 @@ FIND /V /C "" chapters.txt | ..\lib\grep -Po "\d{1,}" > chapcnt.txt
 SET /P chapcnt=<chapcnt.txt
 ECHO Lade %chapcnt% Kapitel der Reihe nach herunter ...
 FOR /F "tokens=*" %%a IN (chapters.txt) DO (
-    ..\lib\curl --silent -O -J https://content-select.com/media/display/%%a ^
-    --cookie cookie.txt ^
-    -H "User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0" ^
-    -H "Accept: */*" -H "Accept-Language: de,en-US;q=0.7,en;q=0.3" ^
-    -H "Accept-Encoding: gzip, deflate, br" ^
-    -H "Connection: keep-alive" ^
-    -H "Referer: https://content-select.com/js/pdf.worker.js" ^
-    -H "Sec-Fetch-Dest: empty" ^
-    -H "Sec-Fetch-Mode: cors" ^
-    -H "Sec-Fetch-Site: same-origin"
+    ECHO %%a
+    ..\lib\curl --silent --location --compressed -O -J https://content-select.com/media/display/%%a --cookie cookies.txt
 )
 ..\lib\sed "s/[\/:\*\?\x22<>|]//g" title.txt | ..\lib\sed "s/ \+/ /g" | ..\lib\sed "s/^\s*//g" | ..\lib\sed "s/\s*$//g" > filename.txt
 SET /P filename=<filename.txt
@@ -159,15 +151,21 @@ GOTO NEXT
 EXIT /B 0
 
 :AUTH
-    ..\lib\curl --silent --location --compressed https://content-select.com/media/moz_viewer/%uuid% ^
-    %* ^
-    -o website.html ^
-    -H "User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0" ^
-    -H "Accept: */*" -H "Accept-Language: de,en-US;q=0.7,en;q=0.3" ^
-    -H "Accept-Encoding: gzip, deflate, br" ^
-    -H "Connection: keep-alive" ^
-    -H "Sec-Fetch-Dest: document" ^
-    -H "Sec-Fetch-Mode: navigate" ^
-    -H "Sec-Fetch-Site: none" ^
-    -H "Sec-Fetch-User: ?1"
+    ..\lib\curl --silent --location --compressed https://content-select.com/media/moz_viewer/%uuid% --cookie-jar emptyjar.txt -o challenge.html
+    ECHO Rechne Javascript-Challenge zum Erhalt des sucuri-Cookies ...
+    ..\lib\grep -Po "<script>.*</script>" challenge.html | ..\lib\sed "s/<\/*script>//g" > challenge.js
+    START /B ..\lib\phantomjs --cookies-file=phantom.txt challenge.js
+    TIMEOUT /t 10 /nobreak >nul
+    TASKKILL /f /im "phantomjs.exe"
+    ..\lib\grep -Po "sucuri_cloudproxy_uuid_[0-9a-f]*=[0-9a-f]*" phantom.txt > sucuri.txt
+    SET /P sucuri=<sucuri.txt
+    ECHO Erhalte CONTENTSELECT-Cookie und Buch-Index ...
+    ..\lib\curl --silent --location --compressed https://content-select.com/media/moz_viewer/%uuid% -b "%sucuri%" --cookie-jar cookies.txt -o website.html
+    ..\lib\sed "s/=/\t/g" sucuri.txt | ..\lib\sed "s/^/.content-select.com\tTRUE\t\/\tFALSE\t0\t/g" >> cookies.txt
+    DEL challenge.html challenge.js emptyjar.txt phantom.txt sucuri.txt
 EXIT /B 0
+
+:GETMVPAGE
+    ..\lib\curl --silent --location --compressed https://content-select.com/media/moz_viewer/%uuid% --cookie cookies.txt -o website.html
+EXIT /B 0
+
